@@ -1,0 +1,30 @@
+services:
+    frontend:
+        image: "node"
+        volumes:
+            - "./frontend:/var/www/html"
+        working_dir: "/var/www/html"
+        ports:
+            - "5173:5173"
+        command: bash -c "npm install && npm run dev"
+        networks:
+            - sail
+    backend:
+        image: "node"
+        volumes:
+            - "./backend:/var/www/html"
+        working_dir: "/var/www/html"
+        ports:
+            - "4000:4000"
+        command: bash -c "npm install && npm run dev"
+        networks:
+            - sail
+    python:
+        build:
+            context: .
+            dockerfile: ./.docker/Dockerfile
+        volumes:
+            - ./python:/app
+networks:
+    sail:
+        driver: bridge
