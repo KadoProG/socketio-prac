@@ -9,6 +9,7 @@ pygame.init()
 screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
 
+
 # Socket.IO クライアントを作成
 sio = socketio.Client()
 
@@ -32,7 +33,8 @@ def disconnect():
 
 
 # サーバーに接続
-sio.connect("http://localhost:4000")
+params = {"device": "raspberrypi", "nickname": "Python Client"}
+sio.connect("http://localhost:4000", auth=params)
 
 # サーバーにメッセージを送信
 sio.send("Hello from Python client!")
@@ -60,4 +62,4 @@ while True:
 
     # 画面の更新
     pygame.display.flip()
-    clock.tick(60)  # 60 FPSを目指す
+    clock.tick(60)  # 60 FPSを目指す！
