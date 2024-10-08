@@ -19,12 +19,12 @@ services:
         command: bash -c "npm install && npm run dev"
         networks:
             - sail
-    python:
-        build:
-            context: .
-            dockerfile: ./.docker/Dockerfile
-        volumes:
-            - ./python:/app
+    # python:
+    #     build:
+    #         context: .
+    #         dockerfile: ./.docker/Dockerfile
+    #     volumes:
+    #         - ./python:/app
 networks:
     sail:
         driver: bridge
