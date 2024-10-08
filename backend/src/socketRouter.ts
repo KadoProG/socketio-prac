@@ -38,15 +38,27 @@ export const socketRouter = (socket: Socket) => {
 
   clients.add(client);
 
-  // ラズベリーパイが接続している場合は、クライアントにメッセージを送信
-  const message = {
-    type: 'control',
-    control: {
-      connectedRaspberryPi: isConnectedRaspberryPi(),
-    },
-  };
+  if (device === 'client') {
+    // ラズベリーパイが接続している場合は、クライアントにメッセージを送信
+    const message = {
+      type: 'config',
+      config: {
+        connectedRaspberryPi: isConnectedRaspberryPi(),
+      },
+    };
 
-  io.to(socket.id).emit('message', message);
+    io.to(socket.id).emit('message', message);
+  } else if (device === 'raspberrypi') {
+    // ラズベリーパイが接続したときにクライアントにメッセージを送信
+    const message = {
+      type: 'config',
+      config: {
+        connectedRaspberryPi: true,
+      },
+    };
+
+    io.emit('message', message);
+  }
 
   // クライアントからメッセージを受け取ったときの処理
   socket.on('message', (msg) => {
@@ -56,7 +68,17 @@ export const socketRouter = (socket: Socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    console.log('user disconnected', client, device);
     clients.delete(client);
+    if (device === 'raspberrypi') {
+      // ラズベリーパイが切断したときにクライアントにメッセージを送信
+      const message = {
+        type: 'config',
+        config: {
+          connectedRaspberryPi: isConnectedRaspberryPi(),
+        },
+      };
+      io.emit('message', message);
+    }
   });
 };

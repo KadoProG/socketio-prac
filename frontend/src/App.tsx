@@ -19,8 +19,8 @@ const App: React.FC = () => {
   React.useEffect(() => {
     // サーバーからメッセージを受信
     socket.on('message', (msg) => {
-      if (msg.type === 'control') {
-        setConnectedRaspberryPi(msg.control.connectedRaspberryPi ? 'connected' : 'disconnected');
+      if (msg.type === 'config') {
+        setConnectedRaspberryPi(msg.config.connectedRaspberryPi ? 'connected' : 'disconnected');
       }
       if (msg.type === 'message') {
         setChat((prevChat) => [...prevChat, msg.message]);
