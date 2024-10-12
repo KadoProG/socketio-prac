@@ -63,6 +63,21 @@ export const socketRouter = (socket: Socket) => {
   // クライアントからメッセージを受け取ったときの処理
   socket.on('message', (msg) => {
     console.log('message: ' + msg);
+
+    if (msg.type === 'alert') {
+      // メッセージがアラートの場合は全てのクライアントに送信
+      io.emit('message', msg);
+      return;
+    } else if (msg.type === 'control') {
+      // メッセージがコントロールの場合はラズベリーパイに送信
+      clients.forEach((c) => {
+        if (c.device === 'raspberrypi') {
+          io.to(c.id).emit('message', msg);
+        }
+      });
+      return;
+    }
+
     // 受け取ったメッセージを全てのクライアントに送信
     io.emit('message', msg);
   });
