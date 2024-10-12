@@ -1,3 +1,4 @@
+import { Button } from '@/components/Button';
 import React from 'react';
 import { io, Socket } from 'socket.io-client';
 
@@ -59,11 +60,23 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="App">
-      <h1>Chat Application</h1>
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 10,
+          padding: 10,
+          textAlign: 'center',
+        }}
+      >
+        <h1>砂時計App</h1>
 
-      <div>
-        <div>{connectedRaspberryPi}</div>
+        <div>
+          <div>{connectedRaspberryPi}</div>
+        </div>
+        <Button onClick={startClick}>スタート/ストップ</Button>
+        <Button onClick={angleClick}>角度変更</Button>
       </div>
       <form onSubmit={sendMessage}>
         <input
@@ -73,8 +86,6 @@ export const App: React.FC = () => {
         />
         <button>Send</button>
       </form>
-      <button onClick={startClick}>スタート/ストップ</button>
-      <button onClick={angleClick}>アングル変更（固定モード時）</button>
     </div>
   );
 };
