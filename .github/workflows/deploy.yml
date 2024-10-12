@@ -66,10 +66,9 @@ jobs:
             - name: create env file
               run: |
                   echo "FRONTEND_URL=$FRONTEND_URL" > .env
-                  echo "PORT=$PORT" >> .env
+                  echo "PORT=4000" >> .env
               env:
                   FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-                  PORT: ${{ secrets.PORT }}
 
             - name: vite build
               run: |
