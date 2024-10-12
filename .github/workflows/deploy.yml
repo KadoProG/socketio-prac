@@ -41,7 +41,7 @@ jobs:
               uses: burnett01/rsync-deployments@5.1
               with:
                   switches: -avz --delete
-                  path: dist/ # mixhostに送りたいファイルのあるパスを指定
+                  path: frontend/dist/ # 絶対パスに変更
                   remote_path: /home/bvzvxvoh/public_html/subdomains/sub11/ # mixhostのどこに同期させるか
                   remote_host: fast5-blog.com
                   remote_user: bvzvxvoh
