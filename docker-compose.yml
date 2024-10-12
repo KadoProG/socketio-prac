@@ -19,6 +19,8 @@ services:
         ports:
             - "4000:4000"
         command: bash -c "npm install && npm run dev"
+        environment:
+            - FRONTEND_URL=${FRONTEND_URL}
         networks:
             - sail
     # python:

@@ -7,6 +7,7 @@ import { socketRouter } from './socketRouter';
 const app = express();
 
 const frontendUrl = process.env.FRONTEND_URL;
+const port = process.env.PORT || 4000;
 
 // CORSミドルウェアの設定
 app.use(
@@ -20,7 +21,7 @@ app.use(
 const server = http.createServer(app);
 export const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173', // React のフロントエンドのURL
+    origin: frontendUrl, // React のフロントエンドのURL
     methods: ['GET', 'POST'],
   },
 });
@@ -31,6 +32,6 @@ app.get('/', (req: Request, res: Response) => {
 
 io.on('connection', socketRouter);
 
-server.listen(4000, () => {
-  console.log('Server is running on port 4000');
+server.listen(port, () => {
+  console.log('Server is running on port ' + port);
 });
